@@ -1,11 +1,11 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Article Viewer</title>  
-    <script src="https://cdn.tailwindcss.com"></script>  
-    <script>  
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Article Viewer</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>  
         tailwind.config = {  
             theme: {  
                 extend: {  
@@ -16,56 +16,71 @@
                 }  
             }  
         }  
-    </script>  
-</head>  
-<body class="bg-gray-50 min-h-screen flex flex-col">  
-    <!-- Navigation -->  
-    <nav class="bg-white shadow-md">  
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
-            <div class="flex justify-between h-16">  
-                <div class="flex">  
-                    <div class="flex-shrink-0 flex items-center">  
-                        <h1 class="text-2xl font-bold text-brand-primary">Article Hub</h1>  
-                    </div>  
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">  
-                        <a href="index.html" class="nav-link text-gray-700 hover:text-brand-primary">Home</a>  
-                        <a href="articles.html" class="nav-link text-gray-700 hover:text-brand-primary">Articles</a>  
-                        <a href="categories.html" class="nav-link text-gray-700 hover:text-brand-primary">Categories</a>  
-                    </div>  
-                </div>  
-            </div>  
-        </div>  
-    </nav>  
+    </script>
+    </head>
+    <body class="bg-gray-50 min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex">
+                        <div class="flex-shrink-0 flex items-center">
+                            <h1
+                                class="text-2xl font-bold text-brand-primary">Article
+                                Hub</h1>
+                        </div>
+                        <div
+                            class="hidden sm:ml-6 sm:flex sm:space-x-8 flex items-center">
+                            <a href="index.html"
+                                class="nav-link text-gray-700 hover:text-brand-primary">Home</a>
+                            <a href="articles.html"
+                                class="nav-link text-gray-700 hover:text-brand-primary">Articles</a>
+                            <a href="categories.html"
+                                class="nav-link text-gray-700 hover:text-brand-primary">Categories</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-    <!-- Article View Page -->  
-    <main class="flex-grow container mx-auto px-4 py-8">  
-        <section id="article-view-page" class="page">  
-            <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">  
-                <div id="article-view-content">  
-                    <h2 class="text-2xl font-bold mb-4" id="article-title">Article Title</h2>  
-                    <p class="text-gray-700 mb-6" id="article-author">By Author Name</p>  
-                    <p class="text-gray-600 mb-4" id="article-date">Published on: Date</p>  
-                    <div id="article-body" class="text-gray-800">  
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>  
-                    </div>  
-                </div>  
-                <div class="mt-6 text-center">  
-                    <a href="articles.html" class="nav-link bg-brand-primary text-white px-6 py-2 rounded hover:bg-blue-700 transition">  
-                        Back to Articles  
-                    </a>  
-                </div>  
-            </div>  
-        </section>  
-    </main>  
+        <!-- Article View Page -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <section id="article-view-page" class="page">
+                <div
+                    class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+                    <div id="article-view-content">
+                        <h2 class="text-2xl font-bold mb-4"
+                            id="article-title">Article Title</h2>
+                        <p class="text-gray-700 mb-6" id="article-author">By
+                            Author Name</p>
+                        <p class="text-gray-600 mb-4"
+                            id="article-date">Published on: Date</p>
+                        <div id="article-body" class="text-gray-800">
+                            <p>Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <a href="articles.html"
+                            class="nav-link bg-brand-primary text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                            Back to Articles
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
 
-    <!-- Footer -->  
-    <footer class="bg-white shadow-md">  
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center">  
-            <p class="text-gray-600">&copy; 2024 Article Hub. All rights reserved.</p>  
-        </div>  
-    </footer>  
+        <!-- Footer -->
+        <footer class="bg-white shadow-md">
+            <div
+                class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-gray-600">&copy; 2024 Article Hub. All rights
+                    reserved.</p>
+            </div>
+        </footer>
 
-    <script>  
+        <script>  
         // Fungsi untuk mendapatkan parameter dari URL  
         function getQueryParam(param) {  
             const urlParams = new URLSearchParams(window.location.search);  
@@ -101,6 +116,6 @@
         } else {  
             document.getElementById('article-view-content').innerHTML = "<p>Article not found.</p>";  
         }  
-    </script>  
-</body>  
+    </script>
+    </body>
 </html>
