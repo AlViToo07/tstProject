@@ -3,7 +3,7 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Article & Categories Hub</title>  
+    <title>Articles</title>  
     <script src="https://cdn.tailwindcss.com"></script>  
     <script>  
         tailwind.config = {  
@@ -37,11 +37,23 @@
         </div>  
     </nav>  
 
-    <!-- Main Content -->  
+    <!-- Articles Page -->  
     <main class="flex-grow container mx-auto px-4 py-8">  
-        <h2 class="text-4xl font-extrabold text-gray-900 mb-6">Welcome to Article Hub</h2>  
-        <p class="text-xl text-gray-600 mb-8">Explore, Read, and Manage Your Favorite Articles</p>  
-        <a href="articles.html" class="bg-brand-primary text-white px-6 py-3 rounded-lg">View Articles</a>  
+        <h1 class="text-3xl font-bold mb-6 text-center">Latest Articles</h1>  
+        <div id="articles-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">  
+            <!-- Contoh artikel -->  
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">  
+                <h3 class="text-xl font-semibold mb-2">Article 1</h3>  
+                <p class="text-gray-600 mb-4">Short description of Article 1.</p>  
+                <a href="articleViewer.html?articleId=1" class="text-brand-primary hover:underline">Read More</a>  
+            </div>  
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">  
+                <h3 class="text-xl font-semibold mb-2">Article 2</h3>  
+                <p class="text-gray-600 mb-4">Short description of Article 2.</p>  
+                <a href="articleViewer.html?articleId=2" class="text-brand-primary hover:underline">Read More</a>  
+            </div>  
+            <!-- Tambahkan lebih banyak artikel sesuai kebutuhan -->  
+        </div>  
     </main>  
 
     <!-- Footer -->  
