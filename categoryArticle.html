@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Category Articles</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+            rel="stylesheet">
+    </head>
+    <body class="bg-gray-100">
+        <div class="container mx-auto p-6">
+            <h1 id="categoryHeading" class="text-3xl font-bold mb-4">Articles in
+                Category: </h1> <!-- Updated heading -->
+            <div id="articles" class="space-y-4"></div>
+        </div>
+
+        <script>  
+          async function fetchArticles(category) {  
+            try {  
+                const response1 = await fetch(`http://127.0.0.1:8000/api/categories/posts/${encodeURIComponent(category)}`);  
+                const response2 = await fetch(`https://newsapi.org/v2/top-headlines?category=${encodeURIComponent(category)}&pageSize=10&apiKey=670f3776969447d6ba229c8a4e621159`);  
+
+                if (!response1.ok || !response2.ok) {  
+                    throw new Error('Network response was not ok');  
+                }  
+
+                const articles1 = await response1.json();  
+                const articles2 = await response2.json();  
+                const articles2Data = articles2.articles.filter(article => article.title !== "[Removed]");  
+
+                displayArticles(articles1, articles2Data);  
+            } catch (error) {  
+                console.error('Error fetching articles:', error);  
+                document.getElementById('articles').innerHTML = '<p class="text-red-500">Failed to load articles.</p>';  
+            }  
+        }  
+
+        function displayArticles(articles1, articles2) {  
+            const articlesContainer = document.getElementById('articles');  
+            articlesContainer.innerHTML = '';  
+
+            // Handle first API response  
+            articles1.forEach(article => {  
+                const articleElement = document.createElement('div');  
+                articleElement.className = 'bg-white shadow-md rounded-lg p-4 mb-4';  
+                articleElement.innerHTML = `  
+                    <h3 class="text-xl font-bold text-gray-800">${article.title}</h3>  
+                    <p class="text-gray-600">${article.excerpt}</p>  
+                    <a href="http://127.0.0.1:8000/post/detail/${article.slug}" class="text-brand-primary hover:underline">Read more</a>  
+                `;  
+                articlesContainer.appendChild(articleElement);  
+            });  
+
+            // Handle second API response  
+            articles2.forEach(article => {  
+                const articleElement = document.createElement('div');  
+                articleElement.className = 'bg-white shadow-md rounded-lg p-4 mb-4';  
+                articleElement.innerHTML = `  
+                    <h3 class="text-xl font-bold text-gray-800">${article.title}</h3>  
+                    <p class="text-gray-600">${article.description}</p>  
+                    <a href="${article.url}" class="text-brand-primary hover:underline">Read more</a>  
+                `;  
+                articlesContainer.appendChild(articleElement);  
+            });  
+        }  
+
+        // Get the category from the URL  
+        const urlParams = new URLSearchParams(window.location.search);  
+        const category = urlParams.get('category');  
+        if (category) {  
+            // Set the heading to include the selected category  
+            document.getElementById('categoryHeading').innerText = `Articles in Category: ${category.charAt(0).toUpperCase() + category.slice(1)}`;  
+            fetchArticles(category);  
+        } else {  
+            document.getElementById('articles').innerHTML = '<p class="text-red-500">No category selected.</p>';  
+        }  
+    </script>
+    </body>
+</html>

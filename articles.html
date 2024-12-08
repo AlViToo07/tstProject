@@ -1,11 +1,11 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Articles</title>  
-    <script src="https://cdn.tailwindcss.com"></script>  
-    <script>  
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Article & Categories Hub</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>  
         tailwind.config = {  
             theme: {  
                 extend: {  
@@ -15,52 +15,121 @@
                     }  
                 }  
             }  
+        };  
+
+        async function fetchArticles() {  
+            try {  
+                const response1 = await fetch('http://127.0.0.1:8000/api/posts'); // Replace with your first API URL  
+                const response2 = await fetch('https://newsapi.org/v2/everything?q=technology&pageSize=10&apiKey=670f3776969447d6ba229c8a4e621159'); // Replace with your second API URL  
+
+                if (!response1.ok || !response2.ok) {  
+                    throw new Error('Network response was not ok');  
+                }  
+
+                const articles1 = await response1.json();  
+                const articles2 = await response2.json();
+                const articles2Data = articles2.articles.filter(article => article.title !== "[Removed]");
+                displayArticles(articles1, articles2Data);  
+            } catch (error) {  
+                console.error('Error fetching articles:', error);  
+                document.getElementById('articles').innerHTML = '<p class="text-red-500">Failed to load articles.</p>';  
+            }  
         }  
-    </script>  
-</head>  
-<body class="bg-gray-50 min-h-screen flex flex-col">  
-    <!-- Navigation -->  
-    <nav class="bg-white shadow-md">  
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
-            <div class="flex justify-between h-16">  
-                <div class="flex">  
-                    <div class="flex-shrink-0 flex items-center">  
-                        <h1 class="text-2xl font-bold text-brand-primary">Article Hub</h1>  
-                    </div>  
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">  
-                        <a href="index.html" class="nav-link text-gray-700 hover:text-brand-primary">Home</a>  
-                        <a href="articles.html" class="nav-link text-gray-700 hover:text-brand-primary">Articles</a>  
-                        <a href="categories.html" class="nav-link text-gray-700 hover:text-brand-primary">Categories</a>  
-                    </div>  
-                </div>  
-            </div>  
-        </div>  
-    </nav>  
 
-    <!-- Articles Page -->  
-    <main class="flex-grow container mx-auto px-4 py-8">  
-        <h1 class="text-3xl font-bold mb-6 text-center">Latest Articles</h1>  
-        <div id="articles-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">  
-            <!-- Contoh artikel -->  
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">  
-                <h3 class="text-xl font-semibold mb-2">Article 1</h3>  
-                <p class="text-gray-600 mb-4">Short description of Article 1.</p>  
-                <a href="articleViewer.html?articleId=1" class="text-brand-primary hover:underline">Read More</a>  
-            </div>  
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">  
-                <h3 class="text-xl font-semibold mb-2">Article 2</h3>  
-                <p class="text-gray-600 mb-4">Short description of Article 2.</p>  
-                <a href="articleViewer.html?articleId=2" class="text-brand-primary hover:underline">Read More</a>  
-            </div>  
-            <!-- Tambahkan lebih banyak artikel sesuai kebutuhan -->  
-        </div>  
-    </main>  
+        function displayArticles(articles1, articles2) {  
+            const articlesContainer = document.getElementById('articles');  
+            articlesContainer.innerHTML = '';  
 
-    <!-- Footer -->  
-    <footer class="bg-white shadow-md">  
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center">  
-            <p class="text-gray-600">&copy; 2024 Article Hub. All rights reserved.</p>  
-        </div>  
-    </footer>  
-</body>  
+            // Handle first API response  
+            articles1.forEach(article => {  
+                const articleElement = document.createElement('div');  
+                articleElement.className = 'bg-white shadow-md rounded-lg p-4 mb-4';  
+                articleElement.innerHTML = `  
+                    <h3 class="text-xl font-bold text-gray-800">${article.title}</h3>  
+                    <p class="text-gray-600">${article.excerpt}</p>  
+                    <a href="http://127.0.0.1:8000/post/detail/${article.slug}" class="text-brand-primary hover:underline">Read more</a>  
+                `;  
+                articlesContainer.appendChild(articleElement);  
+            });  
+
+            // Handle second API response  
+            articles2.forEach(article => {  
+                const articleElement = document.createElement('div');  
+                articleElement.className = 'bg-white shadow-md rounded-lg p-4 mb-4';  
+                articleElement.innerHTML = `  
+                    <h3 class="text-xl font-bold text-gray-800">${article.title}</h3>  
+                    <p class="text-gray-600">${article.description}</p>  
+                    <a href="${article.url}" class="text-brand-primary hover:underline">Read more</a>  
+                `;  
+                articlesContainer.appendChild(articleElement);  
+            });  
+        }  
+
+        window.onload = fetchArticles; // Fetch articles when the page loads  
+    </script>
+    </head>
+    <body class="bg-gray-50 min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-md">
+            <div
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+                <div class="flex justify-between h-16">
+                    <div class="flex">
+                        <div class="flex-shrink-0 flex items-center">
+                            <h1
+                                class="text-2xl font-bold text-brand-primary">Article
+                                Hub</h1>
+                        </div>
+                        <div
+                            class="hidden sm:ml-6 sm:flex sm:space-x-8 flex items-center">
+                            <a href="index.html"
+                                class="nav-link text-gray-700 hover:text-brand-primary">Home</a>
+                            <a href="articles.html"
+                                class="nav-link text-gray-700 hover:text-brand-primary">Articles</a>
+                            <a href="categories.html"
+                                class="nav-link text-gray-700 hover:text-brand-primary">Categories</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <h2 class="text-4xl font-extrabold text-gray-900 mb-6">Welcome to
+                Article Hub</h2>
+            <p class="text-xl text-gray-600 mb-8">Explore, Read, and Manage Your
+                Favorite Articles</p>
+            <div class="bg-white p-6 rounded-lg shadow-md w-96">
+                <h2 class="text-2xl font-bold mb-4">Search Articles</h2>
+                <input type="text" id="searchInput" placeholder="Search..."
+                    class="border border-gray-300 p-2 w-full mb-4 rounded">
+                <button id="searchButton"
+                    class="bg-blue-500 text-white p-2 rounded w-full">Search</button>
+            </div>
+            <!-- Articles Section -->
+            <div id="articles" class="mt-8"></div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white shadow-md">
+            <div
+                class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-gray-600">&copy; 2024 Article Hub. All rights
+                    reserved.</p>
+            </div>
+        </footer>
+
+        <script>  
+            document.getElementById('searchButton').addEventListener('click', function() {  
+                const searchQuery = document.getElementById('searchInput').value;  
+                if (searchQuery) {  
+                    // Redirect to articleSearch.html with the search query as a parameter  
+                    window.location.href = `articleSearch.html?search=${encodeURIComponent(searchQuery)}`;  
+                } else {  
+                    alert('Please enter a search term.');  
+                }  
+            });  
+        </script>
+    </body>
 </html>
